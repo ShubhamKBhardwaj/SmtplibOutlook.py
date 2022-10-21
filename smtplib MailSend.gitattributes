@@ -1,0 +1,33 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+#smtp: simple mail transfer protocol
+
+import smtplib
+import traceback
+import datetime
+
+errorlog=open('errorlog.txt','a')
+errorlog.write('------------------------- \n ~~##~~Mail Sending Error Log~~##~~ \n')
+try:
+    conn=smtplib.SMTP('smtp-mail.outlook.com',587)     # SMTP Server Domain and Port
+    data=datetime.datetime.now()  # Getting  currengt Date Time to insert in log file 
+    type(conn) 
+    conn
+    conn.ehlo()
+    conn.starttls()
+    conn.login('Enter Mail ID Here','Enter Mail Password Here')
+    conn.sendmail(f' Sender mail id',' Receiver mail id','Subject: so long..\n\nDear skb, hii\n\nhello\n\nshubham {data}')
+    conn.quit()
+    print('ok, the mail has sent')
+
+    errorlog.write(f'No Error, Message sent{data}\n')
+    #errorlog.close()
+except:
+    errorlog.write(f'Mail Not sent{data}\n')
+    data=datetime.datetime.now()
+    errorlog.write(traceback.format_exc())
+    errorlog.write('\n')
+    errorlog.write('\n')
+    #errorlog.close()
+
+    print('error logged')
